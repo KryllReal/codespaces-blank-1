@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity Analytics Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+    <!-- Liquid Flow Background -->
+    <div class="liquid-background" id="liquidBg"></div>
+
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1 class="dashboard-title">⚡ Antigravity Analytics</h1>
+                <div class="header-controls">
+                    <button class="settings-btn" id="settingsBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Global Execution Map</h2>
+                        <div class="card-controls">
+                            <button class="refresh-btn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 4 23 10 17 10"></polyline>
+                                    <polyline points="1 20 1 14 7 14"></polyline>
+                                    <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="map-container">
+                        <div class="world-map-placeholder">
+                            <div class="map-overlay">
+                                <div class="pulse-point" style="top: 30%; left: 45%;"></div>
+                                <div class="pulse-point" style="top: 25%; left: 60%;"></div>
+                                <div class="pulse-point" style="top: 40%; left: 25%;"></div>
+                                <div class="pulse-point" style="top: 50%; left: 70%;"></div>
+                                <div class="pulse-point" style="top: 60%; left: 35%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Side Panel -->
+            <aside class="side-panel">
+                <!-- Control Cards -->
+                <div class="control-card">
+                    <div class="card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                        </svg>
+                        Project Status
+                    </div>
+                    <div class="card-content">
+                        <div class="status-indicator">
+                            <div class="status-dot active"></div>
+                            <span>Active</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-value">2,847</span>
+                            <span class="metric-label">Total Executions</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-card">
+                    <div class="card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12,6 12,12 16,14"></polyline>
+                        </svg>
+                        Activity Monitor
+                    </div>
+                    <div class="card-content">
+                        <div class="toggle-group">
+                            <label class="toggle-label">Real-time Tracking</label>
+                            <label class="ios-toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <label class="toggle-label">Auto Refresh</label>
+                            <label class="ios-toggle">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-card">
+                    <div class="card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                            <polyline points="7.5 4.27 12 6.11 16.5 4.27"></polyline>
+                            <polyline points="7.5 9.73 12 11.57 16.5 9.73"></polyline>
+                            <polyline points="12 6.11 12 11.57"></polyline>
+                        </svg>
+                        Data Filters
+                    </div>
+                    <div class="card-content">
+                        <div class="toggle-group">
+                            <label class="toggle-label">Show Unique Users</label>
+                            <label class="ios-toggle">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="toggle-group">
+                            <label class="toggle-label">Include Bots</label>
+                            <label class="ios-toggle">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-card">
+                    <div class="card-title">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7,10 12,15 17,10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export Options
+                    </div>
+                    <div class="card-content">
+                        <button class="export-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7,10 12,15 17,10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            Export Data
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="close-btn" id="closeSettings">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="setting-group">
+                    <label class="setting-label">Dark Mode</label>
+                    <label class="ios-toggle">
+                        <input type="checkbox" id="darkModeToggle">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html></content>
+<parameter name="filePath">/workspaces/AntigravityKeys/public/dashboard.html

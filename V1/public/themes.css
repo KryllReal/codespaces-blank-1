@@ -1,0 +1,381 @@
+/* Glassmorphism Theme System with White/Black Light-Dark Mode */
+
+/* Global System Variables */
+:root {
+    --blur-backdrop: 25px;
+    --saturate: 180%;
+    --animations-enabled: 1;
+    --transition-duration: 0.3s;
+    --levitation-distance: 8px;
+    --levitation-duration: 0.3s;
+    --haptic-scale: 0.97;
+
+    /* Light Mode Defaults */
+    --bg-primary: #f8f8f8;
+    --bg-secondary: rgba(255, 255, 255, 0.72);
+    --bg-tertiary: #f0f0f0;
+    --bg: #f8f8f8;
+    --surface: rgba(255, 255, 255, 0.65);
+    --surface-dark: rgba(245, 245, 245, 0.64);
+    --border: rgba(255, 255, 255, 0.35);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --shadow: rgba(0, 0, 0, 0.08);
+    --shadow-dark: rgba(0, 0, 0, 0.14);
+    --hover-glow: 0 12px 30px rgba(0, 0, 0, 0.14), 0 0 22px rgba(255, 255, 255, 0.08);
+    --fg: #101010;
+    --fg-muted: #575757;
+    --fg-subtle: #7a7a7a;
+    --dim: #4f4f4f;
+    --accent: #000000;
+    --accent-light: #1a1a1a;
+    --accent-dark: #0a0a0a;
+    --liquid-color-1: rgba(0, 0, 0, 0.08);
+    --liquid-color-2: rgba(0, 0, 0, 0.05);
+    --liquid-color-3: rgba(0, 0, 0, 0.03);
+}
+
+:root[data-mode="dark"] {
+    --bg-primary: #050505;
+    --bg-secondary: rgba(15, 15, 20, 0.86);
+    --bg-tertiary: #111111;
+    --bg: #050505;
+    --surface: rgba(15, 15, 20, 0.88);
+    --surface-dark: rgba(20, 20, 26, 0.72);
+    --border: rgba(255, 255, 255, 0.09);
+    --glass-border: rgba(255, 255, 255, 0.09);
+    --shadow: rgba(0, 0, 0, 0.55);
+    --shadow-dark: rgba(0, 0, 0, 0.8);
+    --hover-glow: 0 12px 30px rgba(255, 255, 255, 0.16), 0 0 22px rgba(255, 255, 255, 0.12);
+    --fg: #f7f7f7;
+    --fg-muted: #b5b5b5;
+    --fg-subtle: #a0a0a0;
+    --dim: #c2c2c2;
+    --accent: #ffffff;
+    --accent-light: #f5f5f5;
+    --accent-dark: #e9e9e9;
+    --liquid-color-1: rgba(255, 255, 255, 0.12);
+    --liquid-color-2: rgba(255, 255, 255, 0.08);
+    --liquid-color-3: rgba(255, 255, 255, 0.04);
+}
+
+/* Liquid Flow Background Animation */
+@keyframes liquidFlow {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(0deg) scale(1);
+        opacity: 0.3;
+    }
+    25% {
+        transform: translate(-30%, -70%) rotate(90deg) scale(1.1);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translate(-70%, -30%) rotate(180deg) scale(0.9);
+        opacity: 0.4;
+    }
+    75% {
+        transform: translate(-40%, -60%) rotate(270deg) scale(1.05);
+        opacity: 0.6;
+    }
+}
+
+/* Liquid Background Container */
+.liquid-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: var(--bg-primary);
+    overflow: hidden;
+}
+
+.liquid-background::before,
+.liquid-background::after {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: liquidFlow 30s ease-in-out infinite;
+}
+
+.liquid-background::before {
+    top: 20%;
+    left: 10%;
+    background: radial-gradient(circle, var(--liquid-color-1), transparent);
+}
+
+.liquid-background::after {
+    bottom: 20%;
+    right: 15%;
+    background: radial-gradient(circle, var(--liquid-color-2), transparent);
+    animation-delay: 5s;
+}
+
+/* Glassmorphic Surface */
+.glass-surface {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-backdrop)) saturate(var(--saturate));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 
+        inset 0 1px 0 var(--border),
+        0 8px 32px var(--shadow);
+}
+
+.glass-surface-alt {
+    background: var(--surface-dark);
+    backdrop-filter: blur(calc(var(--blur-backdrop) * 0.8)) saturate(var(--saturate));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+/* Control Cards */
+.control-card {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-backdrop)) saturate(var(--saturate));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 
+        inset 0 1px 0 var(--border),
+        0 4px 16px var(--shadow);
+}
+
+.control-card:hover {
+    transform: scale(1.02);
+    background: rgba(var(--rgb-accent, 255, 123, 0), 0.05);
+}
+
+.control-card:active {
+    transform: scale(0.97);
+}
+
+/* iOS-Style Toggle Switch */
+.ios-toggle {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.ios-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(200, 200, 200, 0.3);
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px) saturate(150%);
+}
+
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    height: 22px;
+    width: 22px;
+    left: 3px;
+    top: 2px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.ios-toggle input:checked + .toggle-slider {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.ios-toggle input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+}
+
+/* Theme Toggle Controls */
+.theme-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.theme-option {
+    padding: 12px 16px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--surface-dark);
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: all 0.2s;
+    color: var(--fg);
+}
+
+.theme-option:hover {
+    border-color: var(--accent);
+    transform: scale(0.97);
+}
+
+.theme-option.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+}
+
+/* Haptic Button Press */
+button {
+    transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Card Elements */
+.card {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-backdrop)) saturate(var(--saturate));
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 
+        inset 0 1px 0 var(--border),
+        0 8px 24px var(--shadow);
+}
+
+.card:active {
+    transform: scale(0.97);
+}
+
+/* Modal Elements */
+.auth-modal {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-backdrop)) saturate(var(--saturate));
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 
+        inset 0 1px 0 var(--border),
+        0 20px 60px var(--shadow);
+}
+
+/* Input Fields */
+.auth-field input {
+    background: var(--surface-dark);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    backdrop-filter: blur(10px);
+}
+
+.auth-field input:focus {
+    background: var(--surface);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(var(--rgb-accent, 255, 123, 0), 0.1);
+}
+
+/* Button Primary */
+.btn-fill {
+    background: var(--accent);
+    color: white;
+    border: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-fill:active {
+    transform: scale(0.97);
+}
+
+/* Button Secondary */
+.btn-ghost {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    backdrop-filter: blur(10px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-ghost:active {
+    transform: scale(0.97);
+}
+
+/* Text Colors */
+body {
+    background: var(--bg-primary);
+    color: var(--fg);
+}
+
+.nav-link {
+    color: var(--fg-muted);
+}
+
+.wordmark {
+    color: var(--fg);
+}
+
+.tag {
+    color: var(--fg-muted);
+}
+
+.sub {
+    color: var(--fg-muted);
+}
+
+/* Accent Colors */
+.accent {
+    color: var(--accent);
+}
+
+.status-dot {
+    background: var(--accent);
+}
+
+/* Loading Spinner Animation */
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spin 1.2s linear infinite;
+}
+
+/* Transition for Theme Changes */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+    .liquid-background::before,
+    .liquid-background::after {
+        width: 200px;
+        height: 200px;
+        filter: blur(40px);
+    }
+
+    .control-card {
+        padding: 16px;
+    }
+
+    .glass-surface {
+        border-radius: 12px;
+    }
+}

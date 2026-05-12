@@ -1,0 +1,11 @@
+{
+  "name": "antigravity-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "cd V1 && npm run dev",
+    "deploy": "cd V1 && npm run deploy",
+    "db:init": "cd V1 && npm run db:init",
+    "test": "cd V1 && npm test"
+  }
+}

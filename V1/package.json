@@ -1,0 +1,17 @@
+{
+  "name": "antigravity",
+  "version": "1.0.0",
+  "description": "Antigravity Cloudflare Worker with integrated analytics and glassmorphic dashboard.",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute DB --file=./schema.sql",
+    "test": "node -c public/main.js && node -c public/theme-manager.js && node -c public/theme-page.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "wrangler": "^3.0.0"
+  },
+  "license": "SEE LICENSE IN LICENSE FILE"
+}

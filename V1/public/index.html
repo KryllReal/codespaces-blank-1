@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity</title>
+    <meta name="description" content="Distribute, manage, and analyze scripts at scale with real-time execution analytics.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/themes.css">
+    <link rel="stylesheet" href="/auth-modal.css">
+</head>
+
+<body>
+    <div class="liquid-background"></div>
+    <div id="app">
+
+        <section id="landing" class="view active">
+            <nav class="top-bar">
+                <div class="bar-inner">
+                    <a href="/" class="wordmark">Antigravity</a>
+                    <div class="bar-right">
+                        <a href="#" class="nav-link" onclick="document.getElementById('landing').scrollIntoView()">Docs</a>
+                        <a href="https://discord.gg/9xYyyYuKap" target="_blank" class="nav-link">Discord</a>
+                        <a href="/theme.html" class="nav-link">Theme</a>
+                        <button class="btn-fill login-trigger">Sign In</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div class="hero">
+                <div class="hero-inner">
+                    <span class="tag">EXECUTION ANALYTICS</span>
+                    <h1>Track every run. Global.</h1>
+                    <p class="lead">Drop a single line into your script and get real-time execution data, unique
+                        visitors, global maps, and activity heatmaps — all for free.</p>
+                    <div class="hero-cta">
+                        <button class="btn-fill btn-lg login-trigger">Get Started with Discord</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">01</div>
+                    <h3>Global Insight</h3>
+                    <p>Track visitors from around the world with a high-fidelity interactive SVG map and country breakdown.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">02</div>
+                    <h3>Activity Heatmap</h3>
+                    <p>Visualize usage patterns with GitHub-style heatmaps and detailed 24h hourly traffic charts.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">03</div>
+                    <h3>Deep Analytics</h3>
+                    <p>Total executions, unique visitors, and custom event tracking — all updated in real-time.</p>
+                </div>
+            </div>
+
+            <div class="guide-section">
+                <span class="tag">HOW IT WORKS</span>
+                <h2>Set up in 60 seconds.</h2>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-body">
+                            <h3>Create a project</h3>
+                            <p>Sign in with Discord and hit "New Project". Give it a name — you'll get an API key instantly.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-body">
+                            <h3>Drop in the script</h3>
+                            <p>Click "Get Script" on your project and paste the generated code at the top of your Lua script. It fires once on execution — no setup needed.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-body">
+                            <h3>Watch it live</h3>
+                            <p>Every execution shows up in your dashboard in real-time. Explore global visitor maps, activity heatmaps, and hourly charts. Share the public stats page with anyone.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-preview">
+                    <div class="code-preview-head">
+                        <span>your_script.lua</span>
+                    </div>
+                    <pre><code>local http = (syn and syn.request) or request or http_request
+local HttpService = game:GetService("HttpService")
+
+local function Track(eventType, userId)
+    pcall(function()
+        http({
+            Url = \"https://YOUR_DOMAIN/api/antigravity/track\",
+            Method = "POST",
+            Headers = { ["Content-Type"] = "application/json" },
+            Body = HttpService:JSONEncode({
+                apiKey = "YOUR_API_KEY",
+                eventType = eventType or "EXECUTION",
+                userId = userId or tostring(game.Players.LocalPlayer.UserId)
+            })
+        })
+    end)
+end
+
+Track()</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="dashboard" class="view">
+            <nav class="top-bar">
+                <div class="bar-inner">
+                    <a href="/" class="wordmark">Antigravity</a>
+                    <div class="bar-right">
+                        <span class="username-label" id="username"></span>
+                        <img src="" alt="" class="avatar" id="user-avatar">
+                        <a href="/theme.html" class="nav-link">Theme</a>
+                        <button class="nav-link logout-btn" style="background:none;border:none;cursor:pointer">Sign Out</button>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="content">
+                <div class="content-header">
+                    <div>
+                        <h2>Projects</h2>
+                        <p class="sub">Your active tracking instances.</p>
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button class="btn-ghost" id="open-guide">Setup Guide</button>
+                        <button class="btn-fill" id="open-create">New Project</button>
+                    </div>
+                </div>
+
+                <div id="projects-list" class="projects-list"></div>
+            </main>
+        </section>
+
+        <section id="public-stats" class="view">
+            <nav class="top-bar">
+                <div class="bar-inner">
+                    <a href="/" class="wordmark">Antigravity</a>
+                    <div class="bar-right">
+                        <a href="/" class="nav-link">Home</a>
+                    </div>
+                </div>
+            </nav>
+
+            <main class="content">
+                <div id="stats-view">
+                    <div class="stats-header">
+                        <div>
+                            <h2 id="stats-name"></h2>
+                            <p class="sub" id="stats-desc"></p>
+                            <p class="sub" style="font-size:12px;margin-top:8px">Created by <span id="stats-creator" style="color:var(--fg);font-weight:600"></span></p>
+                        </div>
+                        <span class="stats-badge" id="stats-status"></span>
+                        <div class="stats-header-actions">
+                            <button class="btn-fill btn-summary" id="btn-open-summary">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                                Summary
+                            </button>
+                            <button class="btn-ghost" onclick="location.reload()">Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-num" id="stat-total">-</span>
+                            <span class="stat-label">Total Executions</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-num" id="stat-unique">-</span>
+                            <span class="stat-label">Unique Users</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-num" id="stat-daily">-</span>
+                            <span class="stat-label">Last 24h</span>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <div class="chart-card full">
+                            <div class="chart-head">
+                                <h3>7-Day Activity</h3>
+                                <span class="chart-sub">Execution trend</span>
+                            </div>
+                            <div class="chart-body" id="activity-chart"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <div class="chart-card full">
+                            <div class="chart-head">
+                                <h3>Persistence</h3>
+                                <span class="chart-sub">Daily frequency heatmap</span>
+                            </div>
+                            <div class="chart-body" id="heatmap"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section two-col">
+                        <div class="chart-card">
+                            <div class="chart-head">
+                                <h3>Peak Hours</h3>
+                                <span class="chart-sub">Execution distribution</span>
+                            </div>
+                            <div class="chart-body" id="hourly-chart"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-head">
+                                <h3>Weekly Rhythm</h3>
+                                <span class="chart-sub">Daily distribution</span>
+                            </div>
+                            <div class="chart-body" id="weekly-chart"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section two-col">
+                        <div class="chart-card">
+                            <div class="chart-head">
+                                <h3>User Loyalty</h3>
+                                <span class="chart-sub">New vs Returning</span>
+                            </div>
+                            <div class="chart-body" id="loyalty-chart"></div>
+                        </div>
+                        <div class="chart-card">
+                            <div class="chart-head">
+                                <h3>Top Countries</h3>
+                                <span class="chart-sub">By executions</span>
+                            </div>
+                            <div class="chart-body" id="country-list"></div>
+                        </div>
+                    </div>
+
+                    <div class="chart-section">
+                        <div class="chart-card full">
+                            <div class="chart-head">
+                                <h3>Visitors</h3>
+                                <span class="chart-sub">Geographic distribution</span>
+                            </div>
+                            <div class="chart-body">
+                                <div class="map-wrap" id="world-map"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="stats-footer">Project created on <span id="stats-created"></span>.</p>
+                </div>
+
+                <div id="stats-error" style="display: none; text-align: center; padding: 100px 24px;">
+                    <h2>Project not found</h2>
+                    <p class="sub">The project ID in the URL is invalid or has been deleted.</p>
+                    <a href="/" class="btn-fill" style="display: inline-block; margin-top: 24px; text-decoration: none;">Go Home</a>
+                </div>
+            </main>
+        </section>
+
+        <div class="overlay" id="overlay">
+            <div id="dlg-create" class="dialog hidden">
+                <div class="dialog-head">
+                    <h3>New Project</h3>
+                    <button class="close-dlg">&times;</button>
+                </div>
+                <form id="form-create">
+                    <div class="field">
+                        <label>Project Name</label>
+                        <input type="text" id="f-name" placeholder="e.g. Universal Hub" required maxlength="80">
+                    </div>
+                    <div class="field">
+                        <label>Description (Optional)</label>
+                        <input type="text" id="f-desc" placeholder="Briefly describe your script" maxlength="200">
+                    </div>
+                    <button type="submit" class="btn-fill btn-block">Create Project</button>
+                </form>
+            </div>
+
+            <div id="dlg-edit" class="dialog hidden">
+                <div class="dialog-head">
+                    <h3>Edit Project</h3>
+                    <button class="close-dlg">&times;</button>
+                </div>
+                <form id="form-edit">
+                    <input type="hidden" id="e-id">
+                    <div class="field">
+                        <label>Project Name</label>
+                        <input type="text" id="e-name" required maxlength="80">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <input type="text" id="e-desc" maxlength="200">
+                    </div>
+                    <button type="submit" class="btn-fill btn-block">Save Changes</button>
+                </form>
+            </div>
+
+            <div id="dlg-script" class="dialog hidden">
+                <div class="dialog-head">
+                    <h3>Your Script</h3>
+                    <button class="close-dlg">&times;</button>
+                </div>
+                <p class="dialog-desc">Paste this at the top of your Lua script. It will automatically track executions and users.</p>
+                <div class="code-wrap">
+                    <pre id="script-output"></pre>
+                    <button class="btn-fill btn-sm copy-btn">Copy</button>
+                </div>
+            </div>
+
+            <div id="dlg-guide" class="dialog hidden">
+                <div class="dialog-head">
+                    <h3>Setup Guide</h3>
+                    <button class="close-dlg">&times;</button>
+                </div>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-body">
+                            <h3>Create Project</h3>
+                            <p>Give your project a name to get a unique API key.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-body">
+                            <h3>Get Script</h3>
+                            <p>Copy the code snippet and put it in your Lua environment.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-body">
+                            <h3>Analyze</h3>
+                            <p>Visit your public stats link to see real-time data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Executive Carousel Modal -->
+        <div id="summary-modal" class="report-modal carousel hidden">
+            <div class="report-header">
+                <div>
+                    <h2 id="slide-title">Executive Summary</h2>
+                    <p class="stats-meta" id="slide-subtitle"></p>
+                </div>
+                <button class="close-report" id="btn-close-summary">&times;</button>
+            </div>
+            
+            <div class="report-body carousel-body">
+                <div id="slide-content" class="slide-content">
+                    <!-- Dynamic content injected here -->
+                </div>
+            </div>
+
+            <div class="report-footer">
+                <div class="carousel-nav">
+                    <button class="btn-ghost" id="btn-prev-slide">Back</button>
+                    <div id="slide-indicator" class="slide-indicator"></div>
+                    <button class="btn-fill" id="btn-next-slide">Next</button>
+                </div>
+            </div>
+        </div>
+        <div id="drawer-overlay" class="drawer-backdrop"></div>
+
+        <!-- Authentication Modal -->
+        <div class="auth-modal-overlay" id="authOverlay">
+            <div class="auth-modal glass-surface">
+                <div class="auth-header">
+                    <h2 id="authTitle">Sign In</h2>
+                    <button class="auth-close" id="authClose">&times;</button>
+                </div>
+
+                <div class="auth-tab-nav">
+                    <button type="button" class="tab-btn active" data-tab="login" onclick="switchAuthTab('login')">Sign In</button>
+                    <button type="button" class="tab-btn" data-tab="signup" onclick="switchAuthTab('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Tab -->
+                <div class="auth-tab active" id="loginTab">
+                    <div class="auth-desc">Welcome back. Sign in to your account to access your projects and analytics.</div>
+                    
+                    <form id="loginForm" class="auth-form">
+                        <div class="auth-field">
+                            <label>Email</label>
+                            <input type="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="auth-field">
+                            <label>Password</label>
+                            <input type="password" placeholder="Your password" required>
+                        </div>
+                        <button type="submit" class="auth-submit">Sign In</button>
+                    </form>
+
+                    <div class="auth-divider" data-text="or continue with"></div>
+
+                    <div class="auth-oauth">
+                        <button type="button" class="btn-oauth" id="discordLoginBtn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.369a19.8 19.8 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.864-.607 1.25a18.27 18.27 0 0 0-5.487 0c-.163-.386-.395-.875-.607-1.25a.077.077 0 0 0-.079-.037 19.77 19.77 0 0 0-4.885 1.515.07.07 0 0 0-.032.028C1.533 8.346.913 12.232 1.613 16.025a.084.084 0 0 0 .032.057 19.9 19.9 0 0 0 5.993 3.03.08.08 0 0 0 .087-.027c.46-.63.869-1.295 1.221-1.994a.076.076 0 0 0-.042-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.66 10.66 0 0 0 .372-.294.075.075 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.075.075 0 0 1 .079.01c.12.098.246.198.371.294a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.352.699.762 1.364 1.221 1.994a.076.076 0 0 0 .086.027 19.86 19.86 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.747-3.797.115-7.684-3.146-10.654a.06.06 0 0 0-.031-.028ZM8.02 13.231c-.934 0-1.701-.857-1.701-1.909 0-1.052.766-1.909 1.701-1.909 1.944 0 1.735 1.909 0 1.909Zm7.959 0c-.934 0-1.7-.857-1.7-1.909 0-1.052.766-1.909 1.7-1.909 1.944 0 1.735 1.909 0 1.909Z"/>
+                            </svg>
+                            Discord
+                        </button>
+                        <button type="button" class="btn-oauth" id="googleLoginBtn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Google
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p><a class="auth-switch" onclick="switchAuthTab('forgot', this)">Forgot password?</a></p>
+                        <p>Don't have an account? <a class="auth-switch" onclick="switchAuthTab('signup', this)">Sign Up</a></p>
+                    </div>
+                </div>
+
+                <!-- Signup Tab -->
+                <div class="auth-tab" id="signupTab">
+                    <div class="auth-desc">Create a new account to start tracking your scripts globally.</div>
+                    
+                    <form id="signupForm" class="auth-form">
+                        <div class="auth-field">
+                            <label>Email</label>
+                            <input type="email" placeholder="your@email.com" required>
+                        </div>
+                        <div class="auth-field">
+                            <label>Password</label>
+                            <input type="password" placeholder="At least 8 characters" required minlength="8">
+                        </div>
+                        <div class="auth-field">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Confirm your password" required minlength="8">
+                        </div>
+                        <button type="submit" class="auth-submit">Create Account</button>
+                    </form>
+
+                    <div class="auth-divider" data-text="or sign up with"></div>
+
+                    <div class="auth-oauth">
+                        <button type="button" class="btn-oauth" id="discordSignupBtn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M20.317 4.369a19.8 19.8 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.211.375-.445.864-.607 1.25a18.27 18.27 0 0 0-5.487 0c-.163-.386-.395-.875-.607-1.25a.077.077 0 0 0-.079-.037 19.77 19.77 0 0 0-4.885 1.515.07.07 0 0 0-.032.028C1.533 8.346.913 12.232 1.613 16.025a.084.084 0 0 0 .032.057 19.9 19.9 0 0 0 5.993 3.03.08.08 0 0 0 .087-.027c.46-.63.869-1.295 1.221-1.994a.076.076 0 0 0-.042-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.66 10.66 0 0 0 .372-.294.075.075 0 0 1 .078-.01c3.928 1.793 8.18 1.793 12.062 0a.075.075 0 0 1 .079.01c.12.098.246.198.371.294a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.352.699.762 1.364 1.221 1.994a.076.076 0 0 0 .086.027 19.86 19.86 0 0 0 6.002-3.03.077.077 0 0 0 .032-.056c.747-3.797.115-7.684-3.146-10.654a.06.06 0 0 0-.031-.028ZM8.02 13.231c-.934 0-1.701-.857-1.701-1.909 0-1.052.766-1.909 1.701-1.909 1.944 0 1.735 1.909 0 1.909Zm7.959 0c-.934 0-1.7-.857-1.7-1.909 0-1.052.766-1.909 1.7-1.909 1.944 0 1.735 1.909 0 1.909Z"/>
+                            </svg>
+                            Discord
+                        </button>
+                        <button type="button" class="btn-oauth" id="googleSignupBtn">
+                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            </svg>
+                            Google
+                        </button>
+                    </div>
+
+                    <div class="auth-footer">
+                        Already have an account? <a class="auth-switch" onclick="switchAuthTab('login', this)">Sign In</a>
+                    </div>
+                </div>
+
+                <!-- Forgot Password Tab -->
+                <div class="auth-tab" id="forgotTab">
+                    <div class="auth-desc">Enter your email address and we'll send you a link to reset your password.</div>
+                    
+                    <form id="forgotForm" class="auth-form">
+                        <div class="auth-field">
+                            <label>Email</label>
+                            <input type="email" placeholder="your@email.com" required>
+                        </div>
+                        <button type="submit" class="auth-submit">Send Reset Link</button>
+                    </form>
+
+                    <div class="auth-footer" style="margin-top: 24px;">
+                        Remember your password? <a class="auth-switch" onclick="switchAuthTab('login', this)">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="toasts"></div>
+    </div>
+
+    <script src="/theme-manager.js"></script>
+    <script src="/main.js"></script>
+</body>
+
+</html>

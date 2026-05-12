@@ -1,0 +1,12 @@
+name = "xutionscopy"
+pages_build_output_dir = "."
+compatibility_date = "2026-04-28"
+[[d1_databases]]
+binding = "DB"
+database_name = "xutions_db"
+database_id = "34276fe8-92e9-483a-b0e2-cf3618c2efad"
+
+[vars]
+DISCORD_CLIENT_ID = "MOCK_ID"
+DISCORD_CLIENT_SECRET = "MOCK_SECRET"
+XUTIONS_LOG_WEBHOOK = ""

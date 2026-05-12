@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme - Antigravity</title>
+    <meta name="description" content="Customize your Antigravity theme and display preferences.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/themes.css">
+    <link rel="stylesheet" href="/theme-page.css">
+</head>
+
+<body>
+    <div class="liquid-background"></div>
+    <div id="app">
+        <nav class="top-bar">
+            <div class="bar-inner">
+                <a href="/" class="wordmark">Antigravity</a>
+                <div class="bar-right">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="https://discord.gg/9xYyyYuKap" target="_blank" class="nav-link">Discord</a>
+                </div>
+            </div>
+        </nav>
+
+        <main class="theme-container">
+            <div class="theme-content">
+                <div class="theme-header">
+                    <h1>Appearance</h1>
+                    <p>Switch between light and dark mode for the Antigravity app.</p>
+                </div>
+
+                <div class="theme-panel glass-surface">
+                    <div class="panel-title">
+                        <h2>Light / Dark mode</h2>
+                        <p>Light mode is the default. Toggle dark mode for a high-contrast experience.</p>
+                    </div>
+                    <div class="theme-toggle-row">
+                        <div class="theme-toggle-copy">
+                            <strong>Dark mode</strong>
+                            <span>Enable a black glass theme across the app.</span>
+                        </div>
+                        <label class="ios-toggle">
+                            <input type="checkbox" id="darkModeToggle">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="theme-footer">
+                    <p>Your preference is saved automatically in the browser.</p>
+                    <a href="/" class="btn-fill back-btn">Back to Home</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/theme-page.js"></script>
+</body>
+
+</html>

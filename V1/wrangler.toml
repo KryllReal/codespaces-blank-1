@@ -1,0 +1,20 @@
+name = "antigravity"
+main = "src/index.js"
+compatibility_date = "2024-03-29"
+
+# Serve static frontend files from /public
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+
+# Environment Secrets that need to be set via `wrangler secret put`
+# - ADMIN_KEY
+# - DISCORD_CLIENT_ID
+# - DISCORD_CLIENT_SECRET
+# - DISCORD_REDIRECT_URI
+
+[[d1_databases]]
+binding = "DB"
+database_name = "maxitom_db"
+database_id = "36930ffe-01bb-49c6-adb5-162cd04aa824" # maxitom_db
