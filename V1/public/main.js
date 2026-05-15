@@ -40,12 +40,16 @@ function switchAuthTab(tabName, element) {
     const tab = $(`#${tabName}Tab`);
     if (tab) tab.classList.add('active');
     
-    // Update title
+    // Update the modal title based on tab
     const title = $('#authTitle');
     if (title) {
-        if (tabName === 'login') title.textContent = 'Sign In';
-        else if (tabName === 'signup') title.textContent = 'Create Account';
-        else if (tabName === 'forgot') title.textContent = 'Reset Password';
+        if (tabName === 'login') {
+            title.textContent = 'Welcome back';
+        } else if (tabName === 'signup') {
+            title.textContent = 'Get started';
+        } else {
+            title.textContent = 'Antigravity';
+        }
     }
 
     // Update tab navigation state
@@ -766,7 +770,7 @@ function bindEvents() {
     $$('.login-trigger').forEach(b => {
         b.onclick = () => {
             if (authOverlay) authOverlay.classList.add('active');
-            switchAuthTab('login');
+            switchAuthTab('signup');
         };
     });
 
