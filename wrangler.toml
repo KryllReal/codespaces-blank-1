@@ -1,0 +1,17 @@
+name = "antigravity"
+compatibility_date = "2024-03-29"
+
+# Pages deployment configuration
+pages_build_output_dir = "V1/public"
+
+[build]
+command = "echo 'Static build ready'"
+cwd = "V1"
+
+# For API functionality via Workers
+main = "V1/src/index.js"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "maxitom_db"
+database_id = "36930ffe-01bb-49c6-adb5-162cd04aa824"
